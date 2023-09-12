@@ -29,6 +29,6 @@ def merge(left, right):
     return merged
 
 if __name__ == "__main__":
-    arr = [2, 10, 4, 3, 6, 1, 8]
+    arr = [2, 10, 4, 3, 6, 1, 8, 7, 5, 9]
     sorted_arr = merges(arr)
     print("Sorted by \n =", sorted_arr)
