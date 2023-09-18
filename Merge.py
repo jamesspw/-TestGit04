@@ -1,34 +1,32 @@
 def merges(arr):
-    if len(arr) <= 1:
-        return arr
+  if len(arr) > 1:
+    l_arr = arr[:len(arr)//2]
+    r_arr = arr[len(arr)//2:]
+    merges(l_arr)
+    merges(r_arr)
 
-    mid = len(arr) // 2
-    left1 = arr[:mid]
-    right1 = arr[mid:]
+    x = 0
+    y = 0
+    z = 0
+    while x < len(l_arr) and y < len(r_arr):
+      if l_arr[x] < r_arr[y]:
+        arr[z] = l_arr[x]
+        x += 1
+      else:
+        arr[z] = r_arr[y]
+        y += 1
+      z += 1
+    while x < len(l_arr):
+      arr[z] = l_arr[x]
+      x += 1
+      z += 1
+    while y < len(r_arr):
+      arr[z] = r_arr[y]
+      y += 1
+      z += 1
 
-    left01 = merges(left1)
-    right01 = merges(right1)
 
-    return merge(left01, right01)
-
-def merge(left, right):
-    merged = []
-    leftindex, rightindex = 0, 0
-
-    while leftindex < len(left) and rightindex < len(right):
-        if left[leftindex] < right[rightindex]:
-            merged.append(left[leftindex])
-            leftindex += 1
-        else:
-            merged.append(right[rightindex])
-            rightindex += 1
-
-    merged.extend(left[leftindex:])
-    merged.extend(right[rightindex:])
-
-    return merged
-
-if __name__ == "__main__":
-    arr = [2, 10, 4, 3, 6, 1, 8, 7, 5, 9]
-    sorted_arr = merges(arr)
-    print("Sorted by \n =", sorted_arr)
+Before = [3, 5, 8, 6, 7, 4, 1 ,2]
+print('Before Merge :', Before)
+merges(Before)
+print('After Merge :', Before)
