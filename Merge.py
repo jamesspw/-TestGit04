@@ -5,9 +5,7 @@ def merges(arr):
     merges(l_arr)
     merges(r_arr)
 
-    x = 0
-    y = 0
-    z = 0
+    x = y = z = 0
     while x < len(l_arr) and y < len(r_arr):
       if l_arr[x] < r_arr[y]:
         arr[z] = l_arr[x]
