@@ -1,59 +1,66 @@
-class Node:
-    def __init__(self, data):
-        self.data = data
-        self.prev = None
+class Node(object):
+    def __init__(self, item):
+        self.item = item
         self.next = None
+        self.prev = None
 
-class DoublyLinkedList:
+class DLinkList(object):
     def __init__(self):
-        self.head = None
+        self._head = None
 
-    def append(self, data):
-        new_node = Node(data)
-        if not self.head:
-            self.head = new_node
+    def append(self, item):
+        node = Node(item)
+        if self.is_empty():
+            self._head = node
         else:
-            cur = self.head
-            while cur.next:
+            cur = self._head
+            while cur.next != None:
                 cur = cur.next
-            cur.next = new_node
-            new_node.prev = cur
+            cur.next = node
+            node.prev = cur
 
-    def prepend(self, data):
-        new_node = Node(data)
-        if not self.head:
-            self.head = new_node
+    def remove(self, item):
+        if self.is_empty():
+            return
         else:
-            new_node.next = self.head
-            self.head.prev = new_node
-            self.head = new_node
-
-    def delete(self, data):
-        cur = self.head
-        while cur:
-            if cur.data == data:
-                if cur.prev:
-                    cur.prev.next = cur.next
-                if cur.next:
-                    cur.next.prev = cur.prev
-                if cur == self.head:
-                    self.head = cur.next
+            cur = self._head
+            if cur.item == item:
+                if cur.next == None:
+                    self._head = None
+                else:
+                    cur.next.prev = None
+                    self._head = cur.next
                 return
-            cur = cur.next
+            while cur != None:
+                if cur.item == item:
+                    cur.prev.next = cur.next
+                    cur.next.prev = cur.prev
+                    break
+                cur = cur.next
 
+    def is_empty(self):
+        return self._head is None
+
+    # Display the list
     def display(self):
-        cur = self.head
+        cur = self._head
         while cur:
-            print(cur.data, end=" <-> ")
+            print(cur.item, end=" <-> ")
             cur = cur.next
         print("None")
 
-# Example usage:
-dll = DoublyLinkedList()
-dll.append(5)
-dll.append(3)
-dll.append(6)
-dll.prepend(22)
-dll.display()
-dll.delete(3)
-dll.display()
+if __name__ == "__main__":
+    ll = DLinkList()
+    ll.append(1)
+    ll.append(2)
+    ll.append(3)
+    ll.append(4)
+
+    print("Original Doubly Linked List:")
+    ll.display()
+
+    ll.remove(2)
+
+    # Display the list after deletion
+    print("\nDoubly Linked List after deleting node with value 2:")
+    ll.display()
